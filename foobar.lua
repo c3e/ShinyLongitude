@@ -7,20 +7,24 @@ buffer = ws2812.newBuffer(8, 3)
 buffer:fill(0, 0, 0);
 ws2812.write(buffer)
 
+i = 0
+light_timer = tmr.create()
+light_timer:register(100, tmr.ALARM_AUTO, function (t)
+        --print("light loop")
+        i=i+1
+        buffer:fade(3)
+        buffer:set(i%buffer:size()+1, 168, 255, 0)
+        ws2812.write(buffer)
+end)
+
 function start_light()
     print("lights on")
-    local i = 0
-    tmr.alarm(5, 100, 1, function()
-            print("light loop")
-            i=i+1
-            buffer:fade(3)
-            buffer:set(i%buffer:size()+1, 168, 255, 0)
-            ws2812.write(buffer)
-    end)
+
+    print(light_timer:start())
 end
 
 function stop_light()
-    tmr.stop(5)
+    light_timer:stop()
     buffer:fill(0,0,0)
     ws2812.write(buffer)
 end
