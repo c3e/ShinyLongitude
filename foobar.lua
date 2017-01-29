@@ -3,7 +3,7 @@ print(wifi.sta.getip())
 --init ws2812 lights
 ws2812.init(ws2812.MODE_SINGLE)
 ws2812.write(string.char(255, 0, 0, 255, 0, 0))
-buffer = ws2812.newBuffer(8, 3)
+buffer = ws2812.newBuffer(4, 3)
 buffer:fill(0, 0, 0);
 ws2812.write(buffer)
 
@@ -12,9 +12,9 @@ light_timer = tmr.create()
 light_timer:register(100, tmr.ALARM_AUTO, function (t)
         --print("light loop")
         i=i+1
-        buffer:fade(3)
+        buffer:fade(4)
         buffer:set(i%buffer:size()+1, 168, 255, 0)
-        ws2812.write(buffer)
+        ws2812.write(buffer .. buffer)
 end)
 
 function start_light()
@@ -25,8 +25,9 @@ end
 
 function stop_light()
     light_timer:stop()
+    i = 0
     buffer:fill(0,0,0)
-    ws2812.write(buffer)
+    ws2812.write(buffer .. buffer)
 end
 
 dofile("leinwand.lua")

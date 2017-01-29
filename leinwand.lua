@@ -1,8 +1,8 @@
-oc_up = 5
-oc_stop =6
-oc_down = 7
+oc_up = 7
+oc_stop = 6
+oc_down = 5
 
-duration = 5*1000
+duration = 40*1000
 
 gpio.mode(oc_up, gpio.OUTPUT)
 gpio.write(oc_up, gpio.LOW)
