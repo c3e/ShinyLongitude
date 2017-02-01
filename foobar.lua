@@ -6,7 +6,7 @@ ws2812.write(string.char(255, 0, 0, 255, 0, 0))
 buffer = ws2812.newBuffer(4, 3)
 buffer:fill(0, 0, 0);
 ws2812.write(buffer)
-r, g, b = 168, 255, 0
+r, g, b = 255,168, 0
 
 i = 0
 light_timer = tmr.create()
@@ -14,7 +14,7 @@ light_timer:register(100, tmr.ALARM_AUTO, function (t)
         --print("light loop")
         i=i+1
         buffer:fade(4)
-        buffer:set(i%buffer:size()+1, r, g, b)
+        buffer:set(i%buffer:size()+1, g, r, b)
         ws2812.write(buffer .. buffer)
 end)
 
@@ -53,17 +53,17 @@ m:on("message", function (client, topic, message)
             lower_leinwand()
         elseif message == "halt" then
             halt_leinwand()
-        elseif message == "down" then
+        elseif message == "up" then
             upper_leinwand()
         end
     elseif topic == mqtt_topic .. "set/r" then
-        r = int(message)
+        r = tonumber(message)
     elseif topic == mqtt_topic .. "set/g" then
-        g = int(message)
+        g = tonumber(message)
     elseif topic == mqtt_topic .. "set/b" then
-        b = int(message)
+        b = tonumber(message)
     elseif topic == mqtt_topic .. "set/default" then
-        r, g, b = 168, 255, 0
+        r, g, b = 255, 168, 0
     end
     print(message)
 end)
