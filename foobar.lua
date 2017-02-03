@@ -53,7 +53,7 @@ m:on("message", function (client, topic, message)
             lower_leinwand()
         elseif message == "halt" then
             halt_leinwand()
-        elseif message == "down" then
+        elseif message == "up" then
             upper_leinwand()
         end
     elseif topic == mqtt_topic .. "set/r" then
